@@ -1,8 +1,9 @@
 import React from "react";
 //import ReactDOM from "react-dom";
 import { render } from "react-dom";
-import { compose, createStore } from "redux";
+import { compose, createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
+import thunk from "redux-thunk";
 //сначала импортировать библиотеки, потом все остальное
 
 import App from "./App";
@@ -12,7 +13,11 @@ import { rootReducer } from "./redux/rootReducer";
 const store = createStore(
   rootReducer,
   //compose нужен для того чтоб объеденить девтулз и мидлвеар в одну функцию
+
   compose(
+    //applyMiddleware(...) нужендля осуществления асинхронности
+    //applyMiddleware позволяет диспатчить асинхронные события
+    applyMiddleware(thunk),
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
   )
 );

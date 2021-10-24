@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import { createPost } from "../redux/actions";
+import { createPost, showAlert } from "../redux/actions";
+import Alert from "./Alert";
 
 export class PostForm extends React.Component {
   constructor(props) {
@@ -16,7 +17,7 @@ export class PostForm extends React.Component {
     const { title } = this.state;
     if (!title.trim()) {
       //trim() нужен для очистки пробелов в строке
-      return;
+      return this.props.showAlert("Плохое имя поста");
     }
 
     const newPost = {
@@ -40,6 +41,7 @@ export class PostForm extends React.Component {
   render() {
     return (
       <form onSubmit={this.submitHandler}>
+        {this.props.alert && <Alert text={this.props.alert} />}
         <div className="mb-3">
           <label htmlFor="title" className="form-label">
             Заголовок поста
@@ -63,11 +65,16 @@ export class PostForm extends React.Component {
 }
 
 // функция передает в компонент в качестве пропсов диспатч
+//ключ и значение совпадают ( createPost: createPost)
 const mapDispatchToProps = {
-  createPost, //ключ и значение совпадают ( createPost: createPost)
+  createPost,
+  showAlert,
 };
 
+const mapStateToProps = (state) => ({ alert: state.app.alert });
+
 //connect может принимать и классовый компонент как в этом случае
-export default connect(null, mapDispatchToProps)(PostForm);
+// export default connect(null, mapDispatchToProps)(PostForm);
+export default connect(mapStateToProps, mapDispatchToProps)(PostForm);
 
 //connect(null, mapD....   null - значит что мы не передаем в компонент стейт

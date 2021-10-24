@@ -4,7 +4,7 @@ import Post from "./Post";
 
 const Posts = ({ syncPosts }) => {
   if (!syncPosts.length) {
-    console.log("syncPosts>>", syncPosts);
+    // console.log("syncPosts>>", syncPosts);
     return <p className="text-center">нет постов</p>;
   }
 
@@ -12,7 +12,7 @@ const Posts = ({ syncPosts }) => {
 };
 
 const mapStateToProps = (state) => {
-  console.log("state", state);
+  //   console.log("state", state);
   // return state; так передаем весь стейт
 
   return {

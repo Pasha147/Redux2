@@ -1,7 +1,7 @@
 import React from "react";
 
 const Post = ({ post }) => {
-  console.log("Post>>", post);
+  //   console.log("Post>>", post);
   return (
     <div className="card">
       <div className="card-body">

@@ -1,10 +1,11 @@
 import React from "react";
 
 const Post = ({ post }) => {
+  console.log("Post>>", post);
   return (
     <div className="card">
       <div className="card-body">
-        <h5 className="card-title">title here {post}</h5>
+        <h5 className="card-title">{post.title}</h5>
       </div>
     </div>
   );

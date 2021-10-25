@@ -5,11 +5,15 @@ import { compose, createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
 import { spamWordsMiddleware } from "./redux/middleware";
+import createSagaMiddleware from "redux-saga";
 //сначала импортировать библиотеки, потом все остальное
 
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { rootReducer } from "./redux/rootReducer";
+import { sagaWatcher } from "./redux/sagas";
+
+const saga = createSagaMiddleware();
 
 const store = createStore(
   rootReducer,
@@ -18,10 +22,12 @@ const store = createStore(
   compose(
     //applyMiddleware(...) нужендля осуществления асинхронности
     //applyMiddleware позволяет диспатчить асинхронные события
-    applyMiddleware(thunk, spamWordsMiddleware),
+    applyMiddleware(thunk, spamWordsMiddleware, saga),
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
   )
 );
+
+saga.run(sagaWatcher);
 
 const app = (
   <Provider store={store}>

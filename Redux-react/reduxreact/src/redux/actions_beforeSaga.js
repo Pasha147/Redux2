@@ -5,7 +5,6 @@ import {
   HIDE_LOADER,
   SHOW_ALERT,
   HIDE_ALERT,
-  REQUEST_POSTS,
 } from "./types";
 
 export function createPost(post) {
@@ -16,27 +15,24 @@ export function createPost(post) {
 }
 
 export function fetchPosts() {
-  return {
-    type: REQUEST_POSTS,
-  };
   //при асинхронности нужно возвращать не объект а функцию
-  //   return async (dispatch) => {
-  //     try {
-  //       dispatch(showLoader());
-  //       const response = await fetch(
-  //         "https://jsonplaceholder.typicode.com/posts?_limit=5"
-  //       );
-  //       const json = await response.json();
+  return async (dispatch) => {
+    try {
+      dispatch(showLoader());
+      const response = await fetch(
+        "https://jsonplaceholder.typicode.com/posts?_limit=5"
+      );
+      const json = await response.json();
 
-  //       setTimeout(() => {
-  //         dispatch({ type: FETCH_POSTS, payload: json });
-  //         dispatch(hideLoader());
-  //       }, 1000);
-  //     } catch (e) {
-  //       dispatch(showAlert("нет загрузки с сервера"));
-  //       dispatch(hideLoader());
-  //     }
-  //   };
+      setTimeout(() => {
+        dispatch({ type: FETCH_POSTS, payload: json });
+        dispatch(hideLoader());
+      }, 1000);
+    } catch (e) {
+      dispatch(showAlert("нет загрузки с сервера"));
+      dispatch(hideLoader());
+    }
+  };
 }
 
 export function showLoader() {

@@ -4,6 +4,7 @@ import { render } from "react-dom";
 import { compose, createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
+import { spamWordsMiddleware } from "./redux/middleware";
 //сначала импортировать библиотеки, потом все остальное
 
 import App from "./App";
@@ -17,7 +18,7 @@ const store = createStore(
   compose(
     //applyMiddleware(...) нужендля осуществления асинхронности
     //applyMiddleware позволяет диспатчить асинхронные события
-    applyMiddleware(thunk),
+    applyMiddleware(thunk, spamWordsMiddleware),
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
   )
 );
